@@ -4,100 +4,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VMusik AI - Music Generator</title>
+<meta name="theme-color" content="#090711">
+<title>VMusic AI - Cover Studio</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:#090711;color:white;
+  font-family:Arial,sans-serif;
+  min-height:100vh
 }
-
-body {
-  background: #080d18;
-  color: white;
-  font-family: Arial, sans-serif;
+header{
+  padding:20px;
+  background:#100d1c;
+  border-bottom:1px solid #302344;
+  display:flex;justify-content:space-between;
+  align-items:center
 }
-
-header {
-  padding: 20px;
-  background: #101a2b;
-  border-bottom: 1px solid #233653;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.logo{font-size:23px;font-weight:bold;color:#bd83ff}
+.logo span{color:white}
+.studio{color:#b9a2d5;font-size:13px}
+main{max-width:680px;margin:35px auto;padding:18px}
+h1{text-align:center;font-size:28px;margin-bottom:10px}
+.subtitle{text-align:center;color:#a99bbd;font-size:14px;margin-bottom:28px}
+.generator{
+  background:#151020;border:1px solid #38284e;
+  padding:22px;border-radius:18px
 }
-
-.logo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #38a5ff;
+.section-title{font-size:17px;font-weight:bold;margin-bottom:15px}
+label{display:block;margin:17px 0 8px;font-size:14px;color:#e2d7ef}
+input,select,textarea{
+  width:100%;padding:14px;border-radius:10px;
+  border:1px solid #45345c;background:#0d0a16;
+  color:white;font-size:14px;outline:none
 }
-
-main {
-  max-width: 750px;
-  margin: 45px auto;
-  padding: 20px;
+textarea{min-height:85px;resize:vertical}
+input:focus,select:focus,textarea:focus{
+  border-color:#b276ff
 }
-
-h1 {
-  text-align: center;
-  margin-bottom: 12px;
+.upload{
+  border:2px dashed #7751a0;
+  border-radius:13px;padding:24px 12px;
+  text-align:center;background:#100b1b
 }
-
-.subtitle {
-  text-align: center;
-  color: #9caec5;
-  margin-bottom: 30px;
+.upload-icon{font-size:35px;color:#c38aff}
+.upload input{border:0;margin-top:12px;padding:5px}
+.hint{font-size:12px;color:#a99bbd;margin-top:8px}
+.audio-preview{width:100%;margin-top:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{
+  width:100%;padding:16px;border:0;border-radius:11px;
+  background:linear-gradient(100deg,#853be5,#bd70ff);
+  color:white;font-weight:bold;font-size:16px;
+  margin-top:24px;cursor:pointer
 }
-
-.generator {
-  background: #111d30;
-  border: 1px solid #263e60;
-  padding: 24px;
-  border-radius: 16px;
+button:disabled{opacity:.5}
+.status{
+  display:none;margin-top:18px;padding:14px;
+  background:#21172e;border-radius:10px;
+  color:#d7baff;font-size:13px;line-height:1.6
 }
-
-label {
-  display: block;
-  margin: 18px 0 8px;
-}
-
-textarea, select, input {
-  width: 100%;
-  padding: 13px;
-  border-radius: 9px;
-  border: 1px solid #304563;
-  background: #091426;
-  color: white;
-}
-
-textarea {
-  min-height: 110px;
-  resize: vertical;
-}
-
-button {
-  width: 100%;
-  margin-top: 24px;
-  padding: 15px;
-  border: none;
-  border-radius: 9px;
-  background: #1479e8;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #0862c5;
-}
-
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #8495aa;
+footer{text-align:center;padding:25px;color:#847a91;font-size:12px}
+@media(max-width:450px){
+  main{margin:20px auto;padding:14px}
+  .grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -105,60 +75,135 @@ footer {
 <body>
 
 <header>
-  <div class="logo">♫ VMusik AI</div>
-  <div>Music Studio</div>
+  <div class="logo">♫ V<span>Music</span> AI</div>
+  <div class="studio">AI COVER STUDIO</div>
 </header>
 
 <main>
-  <h1>Buat Musik dengan AI</h1>
+  <h1>AI Cover Music</h1>
   <p class="subtitle">
-    Wujudkan musik impianmu dengan kecerdasan buatan.
+    Ubah lagu favoritmu menjadi aransemen musik baru.
   </p>
 
   <section class="generator">
 
-    <label>Deskripsi Lagu</label>
-    <textarea placeholder="Ceritakan lagu yang ingin kamu buat..."></textarea>
+    <div class="section-title">♫ Buat Cover Lagu</div>
 
-    <label>Lirik Lagu</label>
-    <textarea placeholder="Masukkan lirik lagu di sini..."></textarea>
+    <label>Upload Lagu Asli</label>
+    <div class="upload">
+      <div class="upload-icon">☁</div>
+      <p>Pilih lagu dari perangkatmu</p>
+      <p class="hint">Format MP3 atau WAV, maksimal 40 MB</p>
+      <input type="file" id="audioFile" accept=".mp3,.wav,audio/mpeg,audio/wav">
+      <audio id="preview" class="audio-preview" controls hidden></audio>
+    </div>
 
-    <label>Genre Musik</label>
-    <select>
-      <option>Pop</option>
-      <option>Pop Rock</option>
-      <option>Dangdut</option>
-      <option>Rock</option>
-      <option>Jazz</option>
-      <option>EDM</option>
-      <option>Akustik</option>
-    </select>
+    <label>Judul Lagu</label>
+    <input id="songTitle" placeholder="Masukkan judul lagu">
 
-    <label>Jenis Vokal</label>
-    <select>
-      <option>Pria</option>
-      <option>Wanita</option>
-      <option>Duet</option>
-      <option>Instrumental</option>
-    </select>
+    <label>Deskripsi Aransemen</label>
+    <textarea id="description" placeholder="Contoh: Rock romantis dengan nuansa orkestra yang megah..."></textarea>
 
-    <label>Tempo</label>
-    <select>
-      <option>Slow</option>
-      <option>Medium</option>
-      <option>Fast</option>
-    </select>
+    <div class="grid">
+      <div>
+        <label>Genre Musik</label>
+        <select id="genre">
+          <option>Pop Rock</option>
+          <option>Alternative Rock</option>
+          <option>Symphonic Rock</option>
+          <option>Post-Hardcore</option>
+          <option>Akustik</option>
+          <option>Pop</option>
+          <option>Jazz</option>
+          <option>Orkestra</option>
+          <option>EDM</option>
+          <option>Dangdut</option>
+        </select>
+      </div>
+      <div>
+        <label>Jenis Vokal</label>
+        <select id="vocal">
+          <option>Pria</option>
+          <option>Wanita</option>
+          <option>Duet</option>
+          <option>Instrumental</option>
+        </select>
+      </div>
+    </div>
 
-    <button onclick="alert('Generator AI akan dihubungkan pada tahap berikutnya!')">
-      ♫ GENERATE MUSIC
-    </button>
+    <div class="grid">
+      <div>
+        <label>Tempo</label>
+        <select id="tempo">
+          <option>Slow</option>
+          <option selected>Medium</option>
+          <option>Fast</option>
+          <option>95 BPM</option>
+          <option>105 BPM</option>
+        </select>
+      </div>
+      <div>
+        <label>Instrumen Utama</label>
+        <select id="instrument">
+          <option>Piano dan Violin</option>
+          <option>Gitar dan Drum</option>
+          <option>Saxophone dan Violin</option>
+          <option>Full Orchestra</option>
+          <option>Akustik</option>
+          <option>Electronic</option>
+        </select>
+      </div>
+    </div>
+
+    <label>Lirik Lagu (Opsional)</label>
+    <textarea id="lyrics" placeholder="Masukkan lirik lagu jika diperlukan..."></textarea>
+
+    <button id="generate">♫ GENERATE AI COVER</button>
+
+    <div class="status" id="status"></div>
 
   </section>
 </main>
 
 <footer>
-  © 2026 VMusik AI. All Rights Reserved.
+  © 2026 VMusic AI · Create Your Music
 </footer>
+
+<script>
+const fileInput=document.getElementById("audioFile");
+const preview=document.getElementById("preview");
+const statusBox=document.getElementById("status");
+
+fileInput.addEventListener("change",()=>{
+  const file=fileInput.files[0];
+  if(!file)return;
+
+  if(file.size>40*1024*1024){
+    alert("Ukuran lagu maksimal 40 MB.");
+    fileInput.value="";
+    return;
+  }
+
+  preview.src=URL.createObjectURL(file);
+  preview.hidden=false;
+});
+
+document.getElementById("generate").addEventListener("click",()=>{
+  const file=fileInput.files[0];
+
+  if(!file){
+    alert("Silakan upload lagu terlebih dahulu.");
+    return;
+  }
+
+  statusBox.style.display="block";
+  statusBox.innerHTML=
+  "Upload lagu berhasil dipilih!<br><br>"+
+  "Genre: "+document.getElementById("genre").value+"<br>"+
+  "Vokal: "+document.getElementById("vocal").value+"<br><br>"+
+  "Mesin AI YuE2-Turbo belum dihubungkan. Tahap berikutnya adalah menghubungkan server AI agar proses cover benar-benar berjalan.";
+});
+</script>
 
 </body>
 </html>
