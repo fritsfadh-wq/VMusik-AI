@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir -r backend/requirements.txt
 
 WORKDIR /app/backend
 
-EXPOSE 7860
+RUN python -c "import os; print('FILES:', os.listdir('.')); import main; print('IMPORT_OK')"
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
+EXPOSE 3000
+
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-3000}"]
