@@ -1,209 +1,81 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090711">
-<title>VMusic AI - Cover Studio</title>
-
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090914">
+<title>VMusic AI — AI Music Studio</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  background:#090711;color:white;
-  font-family:Arial,sans-serif;
-  min-height:100vh
-}
-header{
-  padding:20px;
-  background:#100d1c;
-  border-bottom:1px solid #302344;
-  display:flex;justify-content:space-between;
-  align-items:center
-}
-.logo{font-size:23px;font-weight:bold;color:#bd83ff}
-.logo span{color:white}
-.studio{color:#b9a2d5;font-size:13px}
-main{max-width:680px;margin:35px auto;padding:18px}
-h1{text-align:center;font-size:28px;margin-bottom:10px}
-.subtitle{text-align:center;color:#a99bbd;font-size:14px;margin-bottom:28px}
-.generator{
-  background:#151020;border:1px solid #38284e;
-  padding:22px;border-radius:18px
-}
-.section-title{font-size:17px;font-weight:bold;margin-bottom:15px}
-label{display:block;margin:17px 0 8px;font-size:14px;color:#e2d7ef}
-input,select,textarea{
-  width:100%;padding:14px;border-radius:10px;
-  border:1px solid #45345c;background:#0d0a16;
-  color:white;font-size:14px;outline:none
-}
-textarea{min-height:85px;resize:vertical}
-input:focus,select:focus,textarea:focus{
-  border-color:#b276ff
-}
-.upload{
-  border:2px dashed #7751a0;
-  border-radius:13px;padding:24px 12px;
-  text-align:center;background:#100b1b
-}
-.upload-icon{font-size:35px;color:#c38aff}
-.upload input{border:0;margin-top:12px;padding:5px}
-.hint{font-size:12px;color:#a99bbd;margin-top:8px}
-.audio-preview{width:100%;margin-top:12px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-button{
-  width:100%;padding:16px;border:0;border-radius:11px;
-  background:linear-gradient(100deg,#853be5,#bd70ff);
-  color:white;font-weight:bold;font-size:16px;
-  margin-top:24px;cursor:pointer
-}
-button:disabled{opacity:.5}
-.status{
-  display:none;margin-top:18px;padding:14px;
-  background:#21172e;border-radius:10px;
-  color:#d7baff;font-size:13px;line-height:1.6
-}
-footer{text-align:center;padding:25px;color:#847a91;font-size:12px}
-@media(max-width:450px){
-  main{margin:20px auto;padding:14px}
-  .grid{grid-template-columns:1fr}
-}
-</style>
-</head>
-
+:root{--bg:#090914;--panel:#121225;--panel2:#19192f;--line:#292943;--text:#f6f4ff;--muted:#9b9ab8;--pink:#f04ca8;--purple:#865cff;--cyan:#55d8e8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#35205b 0,transparent 36%),var(--bg);color:var(--text);font:15px Inter,system-ui,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.side{border-right:1px solid var(--line);padding:25px 17px;background:#0b0b18;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:11px;font-size:21px;font-weight:800;letter-spacing:-.7px;margin:0 8px 35px}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--pink),var(--purple));display:grid;place-items:center;font-size:19px;box-shadow:0 5px 25px #a43fba55}.smallcap{color:#777795;font-size:10px;font-weight:800;letter-spacing:1.6px;margin:22px 10px 10px}.nav{display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:12px;color:#aaa9c3;margin:4px 0;text-decoration:none}.nav.active,.nav:hover{background:linear-gradient(90deg,#8b48bb35,#ec4b9c18);color:white}.nav.active{border:1px solid #a65ac955}.nav .ico{width:20px;text-align:center}.sidebottom{position:absolute;bottom:20px;left:17px;right:17px}.plan{border:1px solid var(--line);background:linear-gradient(145deg,#201a39,#151528);padding:14px;border-radius:14px;color:var(--muted);font-size:12px}.plan b{color:white;display:block;margin-bottom:6px}.main{padding:30px clamp(18px,4vw,56px) 60px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}.eyebrow{color:#c17bea;text-transform:uppercase;font-size:11px;letter-spacing:2px;font-weight:800}.top h1{font-size:clamp(26px,4vw,38px);letter-spacing:-1.5px;margin:7px 0}.top p{color:var(--muted);margin:0}.avatar{width:39px;height:39px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#ed4ea5,#7057ff);font-weight:800}.hero{border:1px solid #563b7a;background:linear-gradient(110deg,#281a45,#1a1835 55%,#321a42);border-radius:20px;padding:25px 28px;margin-bottom:26px;position:relative;overflow:hidden}.hero:after{content:"♫";position:absolute;right:7%;top:-32px;font-size:190px;color:#ffffff0b;transform:rotate(15deg)}.hero h2{font-size:22px;margin:0 0 8px}.hero p{color:#c1b9d8;margin:0;max-width:620px;line-height:1.6}.hero .tag{display:inline-block;color:#ffd1ee;background:#e64da522;border:1px solid #e64da555;border-radius:20px;padding:5px 10px;font-size:11px;margin-bottom:13px}.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:22px}.panel{background:linear-gradient(150deg,#15152a,#10101f);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:22px}.panelhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.panel h3{margin:0;font-size:17px}.muted{color:var(--muted);font-size:12px}.tabs{display:flex;gap:8px;background:#0b0b18;padding:5px;border-radius:12px;width:max-content;margin-bottom:20px}.tab{border:0;background:transparent;color:#aaa9c3;padding:9px 16px;border-radius:9px}.tab.selected{background:linear-gradient(110deg,#874dca,#d044a0);color:white}.field{margin:17px 0}.field label{display:block;color:#d8d5e9;font-size:12px;font-weight:700;margin-bottom:9px}.field textarea,.field input,.field select{width:100%;background:#0b0b19;border:1px solid #34344f;color:white;border-radius:11px;padding:13px;outline:none}.field textarea{min-height:104px;resize:vertical}.field textarea:focus,.field input:focus,.field select:focus{border-color:#a45be2}.two{display:grid;grid-template-columns:1fr 1fr;gap:13px}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#19192d;border:1px solid #35354e;color:#c6c4d9;padding:8px 12px;border-radius:20px;font-size:12px}.chip.active{border-color:#ca65c5;background:#7f3c963b;color:white}.primary{width:100%;border:0;border-radius:12px;padding:14px;color:white;font-weight:800;background:linear-gradient(100deg,#8a54e9,#e649a0);box-shadow:0 8px 25px #a53d9a38}.primary:disabled{opacity:.6;cursor:wait}.drop{border:1px dashed #5a527d;background:#101020;border-radius:14px;padding:23px;text-align:center;color:#aaa9c3}.drop strong{display:block;color:white;margin:8px 0}.drop input{display:none}.drop label{cursor:pointer}.voice{display:grid;grid-template-columns:1fr 1fr;gap:9px}.voice .chip{border-radius:11px;text-align:left;padding:12px}.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}.stat{padding:16px;border-radius:14px;background:#151529;border:1px solid var(--line)}.stat b{font-size:21px;display:block}.stat span{color:var(--muted);font-size:11px}.track{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid #29293d}.coverart{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#f052a5,#6c56ed);display:grid;place-items:center;font-size:20px}.trackinfo{flex:1;min-width:0}.trackinfo b{display:block;font-size:13px}.trackinfo span{font-size:11px;color:var(--muted)}.track button{background:#24243b;border:1px solid #3a3a58;color:#ddd;border-radius:9px;padding:8px 10px}.notice{font-size:11px;line-height:1.5;color:#aaa8c2;background:#111124;border:1px solid #30304b;padding:12px;border-radius:11px;margin-top:14px}.player{position:fixed;bottom:0;left:245px;right:0;background:#10101fee;backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:12px 28px;display:flex;align-items:center;gap:14px;z-index:5}.play{width:37px;height:37px;border:0;border-radius:50%;color:white;background:linear-gradient(135deg,#e64ca6,#7756ed)}.bar{height:4px;background:#35354d;border-radius:9px;flex:1;overflow:hidden}.bar span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--pink),var(--purple))}.player small{color:var(--muted)}.mobilehead{display:none}
+@media(max-width:900px){.app{grid-template-columns:1fr}.side{display:none}.player{left:0}.main{padding:22px 16px 100px}.grid{grid-template-columns:1fr}.mobilehead{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}.top{margin-bottom:22px}.sidebottom{display:none}}
+@media(max-width:480px){.two,.statrow{grid-template-columns:1fr}.hero{padding:20px}.panel{padding:17px}.voice{grid-template-columns:1fr}.top p{max-width:260px}}
+</style></head>
 <body>
-
-<header>
-  <div class="logo">♫ V<span>Music</span> AI</div>
-  <div class="studio">AI COVER STUDIO</div>
-</header>
-
-<main>
-  <h1>AI Cover Music</h1>
-  <p class="subtitle">
-    Ubah lagu favoritmu menjadi aransemen musik baru.
-  </p>
-
-  <section class="generator">
-
-    <div class="section-title">♫ Buat Cover Lagu</div>
-
-    <label>Upload Lagu Asli</label>
-    <div class="upload">
-      <div class="upload-icon">☁</div>
-      <p>Pilih lagu dari perangkatmu</p>
-      <p class="hint">Format MP3 atau WAV, maksimal 40 MB</p>
-      <input type="file" id="audioFile" accept=".mp3,.wav,audio/mpeg,audio/wav">
-      <audio id="preview" class="audio-preview" controls hidden></audio>
-    </div>
-
-    <label>Judul Lagu</label>
-    <input id="songTitle" placeholder="Masukkan judul lagu">
-
-    <label>Deskripsi Aransemen</label>
-    <textarea id="description" placeholder="Contoh: Rock romantis dengan nuansa orkestra yang megah..."></textarea>
-
-    <div class="grid">
-      <div>
-        <label>Genre Musik</label>
-        <select id="genre">
-          <option>Pop Rock</option>
-          <option>Alternative Rock</option>
-          <option>Symphonic Rock</option>
-          <option>Post-Hardcore</option>
-          <option>Akustik</option>
-          <option>Pop</option>
-          <option>Jazz</option>
-          <option>Orkestra</option>
-          <option>EDM</option>
-          <option>Dangdut</option>
-        </select>
+<div class="app">
+<aside class="side">
+  <div class="brand"><div class="logo">♫</div>VMusic <span style="color:#d65ab4">AI</span></div>
+  <div class="smallcap">WORKSPACE</div>
+  <a class="nav active" href="#studio"><span class="ico">✦</span> Studio</a>
+  <a class="nav" href="#generator"><span class="ico">🎼</span> AI Music Generator</a>
+  <a class="nav" href="#cover"><span class="ico">🎙</span> AI Cover</a>
+  <div class="smallcap">YOUR MUSIC</div>
+  <a class="nav" href="#library"><span class="ico">▤</span> My Library</a>
+  <a class="nav" href="#recent"><span class="ico">◷</span> Recent Projects</a>
+  <div class="sidebottom"><div class="plan"><b>♫ Your creative space</b>Mulai buat musik original dan cover dari materi yang boleh Anda gunakan.</div></div>
+</aside>
+<main class="main" id="studio">
+  <div class="mobilehead"><div class="brand" style="margin:0"><div class="logo">♫</div>VMusic <span style="color:#d65ab4">AI</span></div><div class="avatar">V</div></div>
+  <header class="top"><div><div class="eyebrow">AI MUSIC STUDIO</div><h1>Make music your way.</h1><p>Ubah ide, lirik, dan inspirasi menjadi karya musik.</p></div><div class="avatar" style="display:none">V</div></header>
+  <section class="hero"><span class="tag">✦ CREATE WITHOUT LIMITS</span><h2>Musik dimulai dari imajinasi.</h2><p>Buat lagu original atau olah materi audio yang Anda miliki hak atau izinnya. Pilih gaya, tentukan karakter vokal, lalu mulai berkarya.</p></section>
+  <div class="statrow"><div class="stat"><b>01</b><span>Describe your sound</span></div><div class="stat"><b>02</b><span>Customize your style</span></div><div class="stat"><b>03</b><span>Create & download</span></div></div>
+  <div class="grid">
+    <section>
+      <div class="panel" id="generator">
+        <div class="panelhead"><h3>✦ Create your music</h3><span class="muted">AI GENERATOR</span></div>
+        <div class="tabs"><button class="tab selected" data-mode="song">Music Generator</button><button class="tab" data-mode="cover">AI Cover</button></div>
+        <div id="songFields">
+          <div class="field"><label>Describe your music</label><textarea id="prompt" placeholder="Contoh: Lagu pop rock Indonesia yang emosional, piano lembut di awal, gitar elektrik kuat pada chorus, dengan nuansa sinematik..."></textarea></div>
+          <div class="field"><label>Lyrics <span class="muted">(optional)</span></label><textarea id="lyrics" placeholder="Masukkan lirik lagu Anda di sini..."></textarea></div>
+        </div>
+        <div id="coverFields" style="display:none">
+          <div class="field"><label>Upload audio milik Anda / yang Anda punya izin gunakan</label><div class="drop"><label for="audio">＋<strong id="fileLabel">Pilih file audio</strong><span class="muted">MP3, WAV, M4A</span></label><input id="audio" type="file" accept="audio/*"></div></div>
+          <div class="field"><label>Tujuan cover / arahan</label><textarea id="coverPrompt" placeholder="Jelaskan karakter suara dan gaya musik yang diinginkan..."></textarea></div>
+        </div>
+        <div class="two">
+          <div class="field"><label>Genre</label><select id="genre"><option>Pop</option><option>Pop Rock</option><option>Alternative Rock</option><option>Electronic</option><option>R&B / Soul</option><option>Jazz</option><option>Orchestral</option><option>Acoustic</option><option>Dangdut</option><option>Other</option></select></div>
+          <div class="field"><label>Mood</label><select id="mood"><option>Emotional</option><option>Energetic</option><option>Romantic</option><option>Dark</option><option>Happy</option><option>Epic</option><option>Calm</option></select></div>
+        </div>
+        <div class="field"><label>Voice character</label><div class="voice" id="voices">
+          <button class="chip active">♂ Pria rendah dan berat</button><button class="chip">♂ Pria sedang dan tinggi</button><button class="chip">♀ Wanita lembut</button><button class="chip">♀ Wanita powerful</button><button class="chip">♪ Suara anak-anak</button>
+        </div></div>
+        <div class="field"><label>Extra style tags</label><div class="chips" id="styles"><button class="chip active">Piano</button><button class="chip">Electric Guitar</button><button class="chip">Violin</button><button class="chip">Drums</button><button class="chip">Bass</button><button class="chip">Orchestra</button><button class="chip">Synth</button></div></div>
+        <button class="primary" id="generate">✦ Generate Music</button>
+        <div class="notice">Prototype tampilan: tombol generate belum menjalankan inferensi YuE2. Mesin AI, antrean GPU, dan penyimpanan audio perlu disambungkan pada backend sebelum hasil musik sungguhan dapat dibuat.</div>
       </div>
-      <div>
-        <label>Jenis Vokal</label>
-        <select id="vocal">
-          <option>Pria</option>
-          <option>Wanita</option>
-          <option>Duet</option>
-          <option>Instrumental</option>
-        </select>
+    </section>
+    <section>
+      <div class="panel" id="library"><div class="panelhead"><h3>♫ Your library</h3><span class="muted">YOUR CREATIONS</span></div>
+        <div id="empty" style="text-align:center;padding:25px 8px;color:#aaa9c3"><div style="font-size:34px;margin-bottom:10px">♫</div><b style="color:white">Belum ada musik</b><p class="muted">Musik yang sudah dibuat akan muncul di sini.</p></div>
+        <div id="tracks"></div>
       </div>
-    </div>
-
-    <div class="grid">
-      <div>
-        <label>Tempo</label>
-        <select id="tempo">
-          <option>Slow</option>
-          <option selected>Medium</option>
-          <option>Fast</option>
-          <option>95 BPM</option>
-          <option>105 BPM</option>
-        </select>
+      <div class="panel" id="recent"><div class="panelhead"><h3>How it works</h3></div>
+        <div class="track"><div class="coverart">✎</div><div class="trackinfo"><b>Describe</b><span>Tulis ide, lirik, atau arahan musik.</span></div></div>
+        <div class="track"><div class="coverart">♫</div><div class="trackinfo"><b>Customize</b><span>Pilih genre, mood, dan karakter vokal.</span></div></div>
+        <div class="track" style="border:0"><div class="coverart">↓</div><div class="trackinfo"><b>Listen & download</b><span>Putar dan unduh hasil saat mesin AI aktif.</span></div></div>
       </div>
-      <div>
-        <label>Instrumen Utama</label>
-        <select id="instrument">
-          <option>Piano dan Violin</option>
-          <option>Gitar dan Drum</option>
-          <option>Saxophone dan Violin</option>
-          <option>Full Orchestra</option>
-          <option>Akustik</option>
-          <option>Electronic</option>
-        </select>
-      </div>
-    </div>
-
-    <label>Lirik Lagu (Opsional)</label>
-    <textarea id="lyrics" placeholder="Masukkan lirik lagu jika diperlukan..."></textarea>
-
-    <button id="generate">♫ GENERATE AI COVER</button>
-
-    <div class="status" id="status"></div>
-
-  </section>
+    </section>
+  </div>
 </main>
-
-<footer>
-  © 2026 VMusic AI · Create Your Music
-</footer>
-
+</div>
+<div class="player"><button class="play" id="play">▶</button><div style="min-width:90px"><b style="font-size:12px">VMusic Player</b><br><small id="nowPlaying">No track selected</small></div><div class="bar"><span id="progress"></span></div><small>--:--</small></div>
 <script>
-const fileInput=document.getElementById("audioFile");
-const preview=document.getElementById("preview");
-const statusBox=document.getElementById("status");
-
-fileInput.addEventListener("change",()=>{
-  const file=fileInput.files[0];
-  if(!file)return;
-
-  if(file.size>40*1024*1024){
-    alert("Ukuran lagu maksimal 40 MB.");
-    fileInput.value="";
-    return;
-  }
-
-  preview.src=URL.createObjectURL(file);
-  preview.hidden=false;
-});
-
-document.getElementById("generate").addEventListener("click",()=>{
-  const file=fileInput.files[0];
-
-  if(!file){
-    alert("Silakan upload lagu terlebih dahulu.");
-    return;
-  }
-
-  statusBox.style.display="block";
-  statusBox.innerHTML=
-  "Upload lagu berhasil dipilih!<br><br>"+
-  "Genre: "+document.getElementById("genre").value+"<br>"+
-  "Vokal: "+document.getElementById("vocal").value+"<br><br>"+
-  "Mesin AI YuE2-Turbo belum dihubungkan. Tahap berikutnya adalah menghubungkan server AI agar proses cover benar-benar berjalan.";
-});
+let mode='song',selectedVoice='♂ Pria rendah dan berat',selectedStyles=['Piano'];
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');mode=b.dataset.mode;document.getElementById('songFields').style.display=mode==='song'?'block':'none';document.getElementById('coverFields').style.display=mode==='cover'?'block':'none';document.getElementById('generate').textContent=mode==='song'?'✦ Generate Music':'✦ Create AI Cover'}));
+document.querySelectorAll('#voices .chip').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#voices .chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedVoice=b.textContent}));
+document.querySelectorAll('#styles .chip').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('active');selectedStyles=[...document.querySelectorAll('#styles .chip.active')].map(x=>x.textContent)}));
+document.getElementById('audio').addEventListener('change',e=>{document.getElementById('fileLabel').textContent=e.target.files[0]?.name||'Pilih file audio'});
+document.getElementById('generate').addEventListener('click',()=>{alert('Tampilan VMusic AI sudah siap. Untuk menghasilkan audio sungguhan, backend YuE2 dan server GPU perlu dihubungkan terlebih dahulu. Saat ini belum ada proses audio yang dijalankan.')});
+document.getElementById('play').addEventListener('click',()=>alert('Belum ada audio. Hasil musik akan dapat diputar setelah backend AI terhubung.'));
 </script>
-
-</body>
-</html>
+</body></html>
